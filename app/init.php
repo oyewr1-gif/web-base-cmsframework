@@ -1,8 +1,9 @@
 <?php
+//echo "init.php\r\n";
 // 1. Definisi Global Path Constants
 define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP_PATH', ROOT_PATH . 'app' . DIRECTORY_SEPARATOR);
-
+//echo ROOT_PATH."\r\n"; echo APP_PATH."\r\n";
 // 2. Pengaturan Session yang Aman
 if (session_status() === PHP_SESSION_NONE) {
     session_start([

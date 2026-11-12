@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Admin CMS</title>
+    <?php $baseAsset = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\'); ?>
+    <link rel="stylesheet" href="<?= $baseAsset ?>/assets/css/admin.css">
 </head>
 <body>
     <h2>Login Pengelola CMS</h2>
@@ -11,6 +13,7 @@
         <p style="color: red;"><?= Security::e($error) ?></p>
     <?php endif; ?>
 
+    <div class="login-box">
     <form method="POST" action="">
         <input type="hidden" name="csrf_token" value="<?= Security::csrfToken() ?>">
         <div>
@@ -23,5 +26,6 @@
         </div><br>
         <button type="submit">Masuk</button>
     </form>
+    </div>
 </body>
 </html>
