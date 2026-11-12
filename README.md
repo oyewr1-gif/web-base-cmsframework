@@ -1,6 +1,6 @@
-# Almuna CMS Front-End Framework (PHP MVC)
+# CMS Front-End Framework (PHP MVC)
 
-**CMS Front-End Framework** adalah aplikasi antarmuka *Content Management System* ringan berbasis arsitektur **PHP MVC (Modular)** tanpa ketergantungan *library* pihak ketiga (*Zero External Dependencies*). Aplikasi ini berperan sebagai lapisan klien yang mengonsumsi **Almuna REST API** menggunakan pertukaran data **JSON** dan otentikasi **JSON Web Token (JWT)**.
+**CMS Front-End Framework** adalah aplikasi antarmuka *Content Management System* ringan berbasis arsitektur **PHP MVC (Modular)** tanpa ketergantungan *library* pihak ketiga (*Zero External Dependencies*). Aplikasi ini berperan sebagai lapisan klien yang mengonsumsi ** REST API** menggunakan pertukaran data **JSON** dan otentikasi **JSON Web Token (JWT)**.
 
 ---
 
@@ -25,7 +25,7 @@
 1. **Salin Proyek:** Tempatkan folder proyek ke direktori web server Anda (misalnya `D:/server/xampp/htdocs/cmsframework`).
 2. **Konfigurasi Environment:** Buat atau sesuaikan file `.env` di direktori utama (`ROOT_PATH/.env`):
    ```env
-   APP_NAME="Almuna CMS"
+   APP_NAME=" CMS"
    APP_URL="http://cmsframework.local"
    API_BASE_URL="http://cmsframework.local/api"
    RATE_LIMIT_MAX=60
