@@ -1,6 +1,6 @@
 <?php
 // 1. Definisi Global Path Constants
-define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR   . DIRECTORY_SEPARATOR);
+define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP_PATH', ROOT_PATH . 'app' . DIRECTORY_SEPARATOR);
 
 // 2. Pengaturan Session yang Aman
@@ -15,22 +15,28 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once APP_PATH . 'Core/Env.php';
 Env::load(ROOT_PATH . '.env');
 
-// 4. Autoloader Otomatis (Core & Modules)
+// 4. Autoloader Otomatis (Core & Modules Public/Admin)
 spl_autoload_register(function ($className) {
-    // Cek di folder app/Core/
-    $coreFile = APP_PATH . 'Core/' . $className . '.php';
+    // Prioritas 1: Cek di folder Core
+    $coreFile = APP_PATH . "Core/{$className}.php";
     if (file_exists($coreFile)) {
         require_once $coreFile;
         return;
     }
 
-    // Cek di folder app/Modules/{NamaModul}/{NamaClass}.php
-    // Contoh: ProdukController atau ProdukModule -> mencari di app/Modules/Produk/
-    $moduleName = str_replace(['Controller', 'Module'], '', $className);
-    $moduleFile = APP_PATH . 'Modules/' . $moduleName . '/' . $className . '.php';
-    if (file_exists($moduleFile)) {
-        require_once $moduleFile;
-        return;
+    // Prioritas 2: Cari di dalam sub-folder Modules/Public/* dan Modules/Admin/*
+    $areas = ['Public', 'Admin'];
+    foreach ($areas as $area) {
+        $moduleFolders = glob(APP_PATH . "Modules/{$area}/*", GLOB_ONLYDIR);
+        if ($moduleFolders) {
+            foreach ($moduleFolders as $folder) {
+                $file = "{$folder}/{$className}.php";
+                if (file_exists($file)) {
+                    require_once $file;
+                    return;
+                }
+            }
+        }
     }
 });
 

@@ -2,9 +2,9 @@
 abstract class CoreModule {
     protected $endpoint = '';
     protected $authRules = [
-        'index'  => false,
+        'index' => false,
         'detail' => false,
-        'store'  => true,
+        'store' => true,
         'update' => true,
         'delete' => true
     ];
@@ -28,4 +28,9 @@ abstract class CoreModule {
     public function delete($id) {
         return ApiClient::request('DELETE', "{$this->endpoint}/hapus/{$id}", [], $this->authRules['delete']);
     }
+
+    public function uploadMedia(array $files, array $fields = []) {
+        return ApiClient::upload("{$this->endpoint}/upload", $files, $fields, true);
+    }
+
 }

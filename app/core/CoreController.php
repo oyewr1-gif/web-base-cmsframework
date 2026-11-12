@@ -1,60 +1,68 @@
 <?php
-abstract class CoreController
-{
+abstract class CoreController {
     protected $module;
+    protected $area = 'Public'; // 'Public' atau 'Admin'
     protected $viewPath = '';
     protected $redirectPath = '';
 
     // Mapping input $_POST ke payload JSON API (di-override di child controller)
-    protected function mapPayload(array $cleanPost)
-    {
+    protected function mapPayload(array $cleanPost) {
         return $cleanPost;
     }
 
-    protected function view($view, $data = [], $useLayout = true)
-    {
+    protected function view($view, $data = [], $useLayout = true) {
         extract($data);
-        $viewFile = APP_PATH . "/Views/{$view}.php";
+
+        // Otomatis sisipkan $this->viewPath jika belum disertakan dalam $view
+        $targetView = !empty($this->viewPath) && strpos($view, '/') === false
+            ? "{$this->viewPath}/{$view}"
+            : $view;
+        
+        // Jalur view otomatis menyesuaikan folder Public atau Admin
+        $viewFile = APP_PATH . "Views/{$this->area}/{$targetView}.php";
 
         if (!file_exists($viewFile)) {
             http_response_code(404);
-            die("View tidak ditemukan: " . Security::e($view));
+            die("View tidak ditemukan: " . Security::e("{$this->area}/{$view}"));
         }
 
         if ($useLayout) {
-            require_once APP_PATH . '/Views/layouts/header.php';
+            // Layout juga otomatis mengambil dari Views/Public/layouts/ atau Views/Admin/layouts/
+            require_once APP_PATH . "/Views/{$this->area}/layouts/header.php";
             require_once $viewFile;
-            require_once APP_PATH . '/Views/layouts/footer.php';
+            require_once APP_PATH . "/Views/{$this->area}/layouts/footer.php";
         } else {
             require_once $viewFile;
         }
     }
 
-
-    protected function redirect($path)
-    {
+    protected function redirect($path) {
         header("Location: " . rtrim(Env::get('APP_URL'), '/') . $path);
         exit;
     }
 
-    protected function requireAuth()
-    {
+    protected function requireAuth() {
         if (empty($_SESSION['jwt_token'])) {
-            $this->redirect('/auth/login');
+            // Arahkan ke rute login admin jika modul Auth dipindahkan ke folder Admin
+            $loginRoute = ($this->area === 'Admin') ? '/admin/auth/login' : '/auth/login';
+            $this->redirect($loginRoute);
         }
     }
 
     // --- CRUD TERPUSAT ---
-    public function index()
-    {
+    public function index() {
+        // Jika berada di area Admin, wajib login untuk melihat daftar data di dasbor
+        if ($this->area === 'Admin') {
+            $this->requireAuth();
+        }
+
         $res = $this->module->getAll();
         $this->view("{$this->viewPath}/index", [
             'items' => $res['body']['data'] ?? []
         ]);
     }
 
-    public function create()
-    {
+    public function create() {
         $this->requireAuth();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -79,8 +87,7 @@ abstract class CoreController
         $this->view("{$this->viewPath}/form", ['action' => 'create']);
     }
 
-    public function edit($id)
-    {
+    public function edit($id) {
         $this->requireAuth();
         $id = (int) $id;
 
@@ -110,8 +117,7 @@ abstract class CoreController
         ]);
     }
 
-    public function delete($id)
-    {
+    public function delete($id) {
         $this->requireAuth();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Security::verifyCsrf($_POST['csrf_token'] ?? '');
