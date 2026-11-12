@@ -2,7 +2,7 @@
 class mUser extends Model {
     protected $table = 'users';
     // Hanya kolom 'nama' dan 'harga' yang boleh diisi melalui API
-    protected $fillable = ['username', 'email', 'password', 'role']; 
+    protected $fillable = ['username', 'email', 'password', 'role'];
 
     // Skema tabel otomatis saat model pertama kali dipanggil
     protected $schema = "
@@ -15,6 +15,19 @@ class mUser extends Model {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ";
+
+    // Menimpa method all() bawaan agar kolom password tidak ikut tampil
+    public function all() {
+        $stmt = $this->db->query("SELECT id, username, email, role, created_at FROM {$this->table}");
+        return $stmt->fetchAll();
+    }
+
+    // Menimpa method find() bawaan agar kolom password tidak ikut tampil
+    public function find($id) {
+        $stmt = $this->db->prepare("SELECT id, username, email, role, created_at FROM {$this->table} WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch();
+    }
 
     // Mencari pengguna berdasarkan username
     public function findByUsername($username) {
