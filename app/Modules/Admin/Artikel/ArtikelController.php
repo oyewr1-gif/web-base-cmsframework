@@ -1,13 +1,13 @@
 <?php
-class PostController extends CoreController
+class ArtikelController extends CoreController
 {
     protected $area = 'Admin';
-    protected $viewPath = 'post';
-    protected $redirectPath = '/admin/post';
+    protected $viewPath = 'artikel';
+    protected $redirectPath = '/admin/artikel';
 
     public function __construct()
     {
-        $this->module = new PostModule();
+        $this->module = new ArtikelModule();
     }
 
     protected function mapPayload(array $cleanPost)

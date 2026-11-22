@@ -1,7 +1,7 @@
 <?php
-class PostModule extends CoreModule
+class ArtikelModule extends CoreModule
 {
-    protected $endpoint = '/posts'; // Sesuaikan dengan endpoint di REST API Anda
+    protected $endpoint = '/artikel'; // Mengarah ke controller Artikel di REST API
     protected $authRules = [
         'index'  => true, // Di dasbor admin, ambil semua artikel (termasuk draft) menggunakan JWT
         'detail' => true,

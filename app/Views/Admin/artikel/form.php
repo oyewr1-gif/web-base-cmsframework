@@ -39,5 +39,5 @@ $status = $item['status'] ?? ($old['status'] ?? 'draft');
     </div><br>
 
     <button type="submit"><?= $isEdit ? 'Perbarui Artikel' : 'Simpan Artikel' ?></button>
-    <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/post">Batal</a>
+    <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/artikel">Batal</a>
 </form>

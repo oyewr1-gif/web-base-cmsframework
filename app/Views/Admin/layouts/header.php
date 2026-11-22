@@ -13,7 +13,7 @@
         <strong>Panel Admin CMS</strong> |
         <nav style="display:inline;">
             <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin">Dashboard</a> |
-            <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/post">Artikel</a> |
+            <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/artikel">Artikel</a> |
             <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>" target="_blank">Lihat Web</a> |
             <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/user">Pengguna</a> |
             <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/auth/logout">Logout</a>

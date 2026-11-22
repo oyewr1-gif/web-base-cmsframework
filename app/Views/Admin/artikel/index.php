@@ -1,5 +1,5 @@
 <h2>Daftar Artikel CMS</h2>
-<p><a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/post/create">+ Tambah Artikel Baru</a></p>
+<p><a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/artikel/create">+ Tambah Artikel Baru</a></p>
 
 <table border="1" cellpadding="8" cellspacing="0" width="100%">
     <thead>
@@ -20,8 +20,8 @@
                     <td><?= Security::e($row['judul'] ?? '') ?></td>
                     <td><?= Security::e($row['status'] ?? 'draft') ?></td>
                     <td>
-                        <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/post/edit/<?= (int)$row['id'] ?>">Edit</a> |
-                        <form method="POST" action="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/post/delete/<?= (int)$row['id'] ?>" style="display:inline;" onsubmit="return confirm('Hapus artikel ini?')">
+                        <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/artikel/edit/<?= (int)$row['id'] ?>">Edit</a> |
+                        <form method="POST" action="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin/artikel/delete/<?= (int)$row['id'] ?>" style="display:inline;" onsubmit="return confirm('Hapus artikel ini?')">
                             <input type="hidden" name="csrf_token" value="<?= Security::csrfToken() ?>">
                             <button type="submit">Hapus</button>
                         </form>

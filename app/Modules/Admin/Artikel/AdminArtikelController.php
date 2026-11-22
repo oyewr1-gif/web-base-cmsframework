@@ -1,7 +1,7 @@
 <?php
-class AdminPostController extends CoreController {
-    protected $viewPath = 'admin/post';
-    protected $redirectPath = '/adminpost';
+class AdminArtikelController extends CoreController {
+    protected $viewPath = 'admin/artikel';
+    protected $redirectPath = '/adminartikel';
     protected $layout = 'admin';
     protected $requireAuth = true;
 

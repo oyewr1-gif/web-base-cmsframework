@@ -7,11 +7,11 @@ class HomeController extends CoreController
     public function index()
     {
         // Ambil artikel publik tanpa mengirim token JWT ($useAuth = false)
-        $res = ApiClient::request('GET', '/posts', [], false);
+        $res = ApiClient::request('GET', '/artikel', [], false);
 
         $this->view("{$this->viewPath}/index", [
-            'title' => 'Beranda Blog',
-            'posts' => $res['body']['data'] ?? []
+            'title'    => 'Beranda Artikel',
+            'articles' => $res['body']['data'] ?? []
         ]);
     }
 }

@@ -97,7 +97,7 @@ class Model {
         $sql = "UPDATE {$this->table} SET $querySet WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         
-        $data['id'] = $id;
+        $cleanData['id'] = $id;
         return $stmt->execute($cleanData);
     }
 

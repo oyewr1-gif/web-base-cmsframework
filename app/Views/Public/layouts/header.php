@@ -14,6 +14,7 @@
     <header>
         <nav>
             <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>">Beranda</a> |
+            <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/artikel">Artikel</a> |
             <a href="<?= rtrim(Env::get('APP_URL'), '/') ?>/admin">Login Admin</a>
         </nav>
         <hr>
